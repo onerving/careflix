@@ -63,10 +63,10 @@ class App extends Component {
 
   // our delete method that uses our backend api
   // to remove existing database information
-  deleteFromDB = idTodelete => {
+  deleteFromDB = idToDelete => {
     let objIdToDelete = null;
     this.state.data.forEach(dat => {
-      if (dat.id === idTodelete) {
+      if (dat.id.toString() === idToDelete) {
         objIdToDelete = dat._id;
       }
     });
@@ -84,7 +84,7 @@ class App extends Component {
   updateDB = (idToUpdate, updateToApply) => {
     let objIdToUpdate = null;
     this.state.data.forEach(dat => {
-      if (dat.id === idToUpdate) {
+      if (dat.id.toString() === idToUpdate) {
         objIdToUpdate = dat._id;
       }
     });

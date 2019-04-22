@@ -4,7 +4,6 @@ var cors = require("cors");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
 const Data = require("./data");
-const Values = require("./values");
 
 const API_PORT = 3001;
 const app = express();
@@ -12,8 +11,7 @@ app.use(cors());
 const router = express.Router();
 
 // this is our MongoDB database
-
-const dbRoute = Values.DBROUTE;
+const dbRoute = "mongodb+srv://onerving:yZS*GGQYT8V5Au@careflix-myqzq.mongodb.net/test?retryWrites=true";
 
 // connects our back end code with the database
 mongoose.connect(

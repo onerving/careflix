@@ -90,14 +90,17 @@ router.post("/putData", (req, res) => {
 
 // Para la creación de un nuevo usuario
 router.post("/createUser", (req, res) =>{
-    if (req.body.email &&
-        req.body.username &&
-        req.body.password &&
-        req.body.passwordConf) {
+    if (req.body.license &&
+        req.body.firstName &&
+        req.body.lastName &&
+        req.body.specialty &&
+        req.body.password) {
         var userData = {
-            email: req.body.email,
-            username: req.body.username,
-            password: req.body.password,
+            license: req.body.license,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            specialty: req.body.specialty,
+            password: req.body.password
         };
         //use schema.create to insert data into the db
         User.create(userData, function (err, user) {

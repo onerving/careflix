@@ -11,30 +11,35 @@ class App extends Component {
     idToDelete: null,
     idToUpdate: null,
     objectToUpdate: null,
-    email: null,
-    username: null,
-    password: null,
-    passwordConf: null
+    license: null,
+    firstName: null,
+    lastName: null,
+    specialty: null,
+    password: null
   };
 
   // when component mounts, first thing it does is fetch all existing data in our db
   // then we incorporate a polling logic so that we can easily see if our db has
   // changed and implement those changes into our UI
   componentDidMount() {
+    /*
     this.getDataFromDb();
     if (!this.state.intervalIsSet) {
       let interval = setInterval(this.getDataFromDb, 1000);
       this.setState({ intervalIsSet: interval });
     }
+    */
   }
 
   // never let a process live forever
   // always kill a process everytime we are done using it
   componentWillUnmount() {
+    /*
     if (this.state.intervalIsSet) {
       clearInterval(this.state.intervalIsSet);
       this.setState({ intervalIsSet: null });
     }
+    */
   }
 // just a note, here, in the front end, we use the id key of our data object
   // in order to identify which we want to Update or delete.
@@ -49,12 +54,13 @@ class App extends Component {
         .then(res => this.setState({ data: res.data }));
   };
 
-  putUserToDb = (email, username, password, passwordConf) => {
+  putUserToDb = (license, firstName, lastName, specialty, password) => {
     axios.post("/api/createUser", {
-      email: email,
-      username: username,
-      password: password,
-      passwordConf: passwordConf
+      license: license,
+      firstName: firstName,
+      lastName: lastName,
+      specialty: specialty,
+      password: password
     });
   };
 
@@ -115,36 +121,43 @@ class App extends Component {
           </ul>
           <div style={{ padding: "10px" }}>
             <input
-                type="text"
-                onChange={e => this.setState({ email: e.target.value })}
-                placeholder="email"
+                type="number"
+                onChange={e => this.setState({ license: e.target.value })}
+                placeholder="license"
                 style={{ width: "200px" }}
             />
             <input
                 type="text"
                 style={{ width: "200px" }}
-                onChange={e => this.setState({ username: e.target.value })}
-                placeholder="username"
+                onChange={e => this.setState({ firstName: e.target.value })}
+                placeholder="firstName"
             />
             <input
                 type="text"
+                style={{ width: "200px" }}
+                onChange={e => this.setState({ lastName: e.target.value })}
+                placeholder="lastName"
+            />
+            <input
+                type="text"
+                style={{ width: "200px" }}
+                onChange={e => this.setState({ specialty: e.target.value })}
+                placeholder="specialty"
+            />
+            <input
+                type="password"
                 style={{ width: "200px" }}
                 onChange={e => this.setState({ password: e.target.value })}
                 placeholder="password"
             />
-            <input
-                type="text"
-                style={{ width: "200px" }}
-                onChange={e => this.setState({ passwordConf: e.target.value })}
-                placeholder="passwordConf"
-            />
             <button
                 onClick={() =>
                     this.putUserToDb(
-                        this.state.email,
-                        this.state.username,
-                        this.state.password,
-                        this.state.passwordConf
+                        this.state.license,
+                        this.state.firstName,
+                        this.state.lastName,
+                        this.state.specialty,
+                        this.state.password
                     )
                 }
             >

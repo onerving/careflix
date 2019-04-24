@@ -1,16 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+
 class App extends Component {
 
   state = {
-    data: [],
-    id: 0,
-    message: null,
-    intervalIsSet: false,
-    idToDelete: null,
-    idToUpdate: null,
-    objectToUpdate: null,
     license: null,
     firstName: null,
     lastName: null,
@@ -54,7 +48,8 @@ class App extends Component {
         .then(res => this.setState({ data: res.data }));
   };
 
-  putUserToDb = (license, firstName, lastName, specialty, password) => {
+  putUserToDb = event => {
+    const {license, firstName, lastName, specialty, password} = this.state;
     axios.post("/api/createUser", {
       license: license,
       firstName: firstName,
@@ -62,6 +57,7 @@ class App extends Component {
       specialty: specialty,
       password: password
     });
+    event.preventDefault();
   };
 
 
@@ -101,69 +97,62 @@ class App extends Component {
 
 
 
-  // here is our UI
-  // it is easy to understand their functions when you
-  // see them render into our screen
   render() {
-    const { data } = this.state;
     return (
         <div>
-          <ul>
-            {data.length <= 0
-                ? "NO DB ENTRIES YET"
-                : data.map(dat => (
-                    <li style={{ padding: "10px" }} key={data.message}>
-                      <span style={{ color: "gray" }}> id: </span> {dat.id} <br />
-                      <span style={{ color: "gray" }}> data: </span>
-                      {dat.message}
-                    </li>
-                ))}
-          </ul>
-          <div style={{ padding: "10px" }}>
-            <input
-                type="number"
-                onChange={e => this.setState({ license: e.target.value })}
-                placeholder="license"
-                style={{ width: "200px" }}
-            />
-            <input
-                type="text"
-                style={{ width: "200px" }}
-                onChange={e => this.setState({ firstName: e.target.value })}
-                placeholder="firstName"
-            />
-            <input
-                type="text"
-                style={{ width: "200px" }}
-                onChange={e => this.setState({ lastName: e.target.value })}
-                placeholder="lastName"
-            />
-            <input
-                type="text"
-                style={{ width: "200px" }}
-                onChange={e => this.setState({ specialty: e.target.value })}
-                placeholder="specialty"
-            />
-            <input
-                type="password"
-                style={{ width: "200px" }}
-                onChange={e => this.setState({ password: e.target.value })}
-                placeholder="password"
-            />
-            <button
-                onClick={() =>
-                    this.putUserToDb(
-                        this.state.license,
-                        this.state.firstName,
-                        this.state.lastName,
-                        this.state.specialty,
-                        this.state.password
-                    )
-                }
-            >
-              AÑADIR
-            </button>
-          </div>
+          <form onSubmit={this.putUserToDb} style={{ padding: "10px" }}>
+
+            <label>
+              Número de Licencia
+              <input
+                  type="number"
+                  onChange={e => this.setState({ license: e.target.value })}
+                  style={{ width: "200px" }}
+              />
+            </label>
+
+            <label>
+              Nombre
+              <input
+                  type="text"
+                  style={{ width: "200px" }}
+                  onChange={e => this.setState({ firstName: e.target.value })}
+              />
+            </label>
+
+            <label>
+              Apellidos
+              <input
+                  type="text"
+                  style={{ width: "200px" }}
+                  onChange={e => this.setState({ lastName: e.target.value })}
+              />
+            </label>
+            <label>
+              Especialidad
+              <select
+                  type="text"
+                  value={this.state.specialty}
+                  style={{ width: "200px" }}
+                  onChange={e => this.setState({ specialty: e.target.value })}
+              >
+                <option value="Gastroenterología">Gastroenterología</option>
+                <option value="Obstetricia">Obstetricia</option>
+                <option value="Pediatría">Pediatría</option>
+              </select>
+            </label>
+
+            <label>
+              <input
+                  type="password"
+                  style={{ width: "200px" }}
+                  onChange={e => this.setState({ password: e.target.value })}
+                  placeholder="password"
+              />
+            </label>
+
+            <input type="submit" value="Submit" />
+          </form>
         </div>
     );
   }

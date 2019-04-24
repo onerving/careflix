@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const express = require("express");
+//var session = require("express-session");
 var cors = require("cors");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
@@ -95,7 +96,7 @@ router.post("/createUser", (req, res) =>{
         req.body.lastName &&
         req.body.specialty &&
         req.body.password) {
-        var userData = {
+        const userData = {
             license: req.body.license,
             firstName: req.body.firstName,
             lastName: req.body.lastName,
@@ -119,6 +120,14 @@ app.use(express.static(path.join(__dirname, "client", "build")))
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
+
+/*
+app.use(session({
+    secret: 'shhh dont tell anyone',
+    resave: true,
+    saveUninitialized: false,
+}));
+ */
 
 // launch our backend into a port
 app.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));

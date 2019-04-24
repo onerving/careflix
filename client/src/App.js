@@ -10,7 +10,11 @@ class App extends Component {
     intervalIsSet: false,
     idToDelete: null,
     idToUpdate: null,
-    objectToUpdate: null
+    objectToUpdate: null,
+    email: null,
+    username: null,
+    password: null,
+    passwordConf: null
   };
 
   // when component mounts, first thing it does is fetch all existing data in our db
@@ -45,18 +49,12 @@ class App extends Component {
         .then(res => this.setState({ data: res.data }));
   };
 
-  // our put method that uses our backend api
-  // to create new query into our data base
-  putDataToDB = message => {
-    let currentIds = this.state.data.map(data => data.id);
-    let idToBeAdded = 0;
-    while (currentIds.includes(idToBeAdded)) {
-      ++idToBeAdded;
-    }
-
-    axios.post("/api/putData", {
-      id: idToBeAdded,
-      message: message
+  putUserToDb = (email, username, password, passwordConf) => {
+    axios.post("/api/createUser", {
+      email: email,
+      username: username,
+      password: password,
+      passwordConf: passwordConf
     });
   };
 
@@ -96,6 +94,7 @@ class App extends Component {
   };
 
 
+
   // here is our UI
   // it is easy to understand their functions when you
   // see them render into our screen
@@ -117,44 +116,39 @@ class App extends Component {
           <div style={{ padding: "10px" }}>
             <input
                 type="text"
-                onChange={e => this.setState({ message: e.target.value })}
-                placeholder="add something in the database"
+                onChange={e => this.setState({ email: e.target.value })}
+                placeholder="email"
                 style={{ width: "200px" }}
-            />
-            <button onClick={() => this.putDataToDB(this.state.message)}>
-              ADD
-            </button>
-          </div>
-          <div style={{ padding: "10px" }}>
-            <input
-                type="text"
-                style={{ width: "200px" }}
-                onChange={e => this.setState({ idToDelete: e.target.value })}
-                placeholder="put id of item to delete here"
-            />
-            <button onClick={() => this.deleteFromDB(this.state.idToDelete)}>
-              DELETE
-            </button>
-          </div>
-          <div style={{ padding: "10px" }}>
-            <input
-                type="text"
-                style={{ width: "200px" }}
-                onChange={e => this.setState({ idToUpdate: e.target.value })}
-                placeholder="id of item to update here"
             />
             <input
                 type="text"
                 style={{ width: "200px" }}
-                onChange={e => this.setState({ updateToApply: e.target.value })}
-                placeholder="put new value of the item here"
+                onChange={e => this.setState({ username: e.target.value })}
+                placeholder="username"
+            />
+            <input
+                type="text"
+                style={{ width: "200px" }}
+                onChange={e => this.setState({ password: e.target.value })}
+                placeholder="password"
+            />
+            <input
+                type="text"
+                style={{ width: "200px" }}
+                onChange={e => this.setState({ passwordConf: e.target.value })}
+                placeholder="passwordConf"
             />
             <button
                 onClick={() =>
-                    this.updateDB(this.state.idToUpdate, this.state.updateToApply)
+                    this.putUserToDb(
+                        this.state.email,
+                        this.state.username,
+                        this.state.password,
+                        this.state.passwordConf
+                    )
                 }
             >
-              UPDATE
+              AÑADIR
             </button>
           </div>
         </div>

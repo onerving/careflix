@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const logger = require("morgan");
 const Data = require("./models/data");
 const path = require("path");
+const User = require("./models/user");
 require("dotenv").config();
 
 
@@ -85,6 +86,26 @@ router.post("/putData", (req, res) => {
         if (err) return res.json({ success: false, error: err });
         return res.json({ success: true });
     });
+});
+
+// Para la creación de un nuevo usuario
+router.post("/createUser", (req, res) =>{
+    if (req.body.email &&
+        req.body.username &&
+        req.body.password &&
+        req.body.passwordConf) {
+        var userData = {
+            email: req.body.email,
+            username: req.body.username,
+            password: req.body.password,
+        };
+        //use schema.create to insert data into the db
+        User.create(userData, function (err, user) {
+            if (err) return res.json({ success: false, error: err });
+            return res.json({ success: true });
+        });
+    }
+
 });
 
 // append /api for our http requests

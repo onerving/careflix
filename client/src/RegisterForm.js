@@ -28,6 +28,7 @@ class RegisterForm extends Component{
         }).catch(({response}) => {
             this.setState({inputStyle: {'border-color': 'red'}});
         });
+        this.props.history.push('/');
     };
 
     render(){

@@ -19,18 +19,21 @@ class RegisterForm extends Component{
     putUserToDb = event => {
         event.preventDefault();
         const {license, firstName, lastName, specialty, password} = this.state;
+        let error = null;
         axios.post("/api/createUser", {
             license: license,
             firstName: firstName,
             lastName: lastName,
             specialty: specialty,
             password: password
-        }).catch(({response}) => {
-            this.setState({inputStyle: {borderColor: 'red'}});
-            return;
-        }).then(
-            this.props.history.push('/')
-        );
+            }
+        ).then( () => this.props.history.push('/'))
+            .catch(({response}) => {
+                error = response;
+                this.setState({inputStyle: {borderColor: 'red'}});
+            });
+        if(error == null) {
+        }
     };
 
     render(){

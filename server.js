@@ -105,7 +105,13 @@ router.post("/createUser", (req, res) =>{
         };
         //use schema.create to insert data into the db
         User.create(userData, function (err, user) {
-            if (err) return res.json({ success: false, error: err });
+            if (err) {
+                // Verificamos que el usuario no esté ya en la base de datos.
+                if (err.name === 'MongoError' && err.code === 11000){
+                    return res.status(500).send({success: false, message: 'El usuario ya existe!'});
+                }
+                return res.status(500).send(err);
+            }
             return res.json({ success: true });
         });
     }

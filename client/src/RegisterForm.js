@@ -7,10 +7,17 @@ class RegisterForm extends Component{
         firstName: null,
         lastName: null,
         specialty: null,
-        password: null
+        password: null,
+        inputStyle : {
+            'border-color': 'black',
+            width: '200px'
+        }
     };
 
+
+
     putUserToDb = event => {
+        event.preventDefault();
         const {license, firstName, lastName, specialty, password} = this.state;
         axios.post("/api/createUser", {
             license: license,
@@ -18,8 +25,9 @@ class RegisterForm extends Component{
             lastName: lastName,
             specialty: specialty,
             password: password
+        }).catch(({response}) => {
+            this.setState({inputStyle: {'border-color': 'red'}});
         });
-        event.preventDefault();
     };
 
     render(){
@@ -31,7 +39,7 @@ class RegisterForm extends Component{
                         <input
                             type="number"
                             onChange={e => this.setState({ license: e.target.value })}
-                            style={{ width: "200px" }}
+                            style={this.state.inputStyle}
                         />
                     </label>
 

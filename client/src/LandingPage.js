@@ -5,7 +5,13 @@ class LandingPage extends Component{
     render(){
         return(
             <div>
-                <h2>Por favor inicia sesión o <Link to="/register">regístrate</Link> para continuar</h2>
+                <h2>
+                    Por favor
+                    <Link to="/login">inicia sesión</Link>
+                     o
+                    <Link to="/register">regístrate</Link>
+                    para continuar
+                </h2>
             </div>
         )
 

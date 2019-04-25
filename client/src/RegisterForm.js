@@ -6,10 +6,10 @@ class RegisterForm extends Component{
         license: null,
         firstName: null,
         lastName: null,
-        specialty: null,
+        specialty: "",
         password: null,
         inputStyle : {
-            'border-color': 'black',
+            borderColor: 'black',
             width: '200px'
         }
     };
@@ -26,9 +26,11 @@ class RegisterForm extends Component{
             specialty: specialty,
             password: password
         }).catch(({response}) => {
-            this.setState({inputStyle: {'border-color': 'red'}});
-        });
-        this.props.history.push('/');
+            this.setState({inputStyle: {borderColor: 'red'}});
+            return;
+        }).then(
+            this.props.history.push('/')
+        );
     };
 
     render(){

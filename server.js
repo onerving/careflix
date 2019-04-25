@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const express = require("express");
-//var session = require("express-session");
+var session = require("express-session");
 var cors = require("cors");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
@@ -37,6 +37,11 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(logger("dev"));
+app.use(session({
+    secret: 'shhh dont tell anyone',
+    resave: true,
+    saveUninitialized: false,
+}));
 
 // this is our get method
 // this method fetches all available data in our database
@@ -106,6 +111,7 @@ router.post("/createUser", (req, res) =>{
         //use schema.create to insert data into the db
         User.create(userData, function (err, user) {
             if (err) {
+                console.log(err);
                 // Verificamos que el usuario no esté ya en la base de datos.
                 if (err.name === 'MongoError' && err.code === 11000){
                     return res.status(500).send({success: false, message: 'El usuario ya existe!'});
@@ -118,6 +124,24 @@ router.post("/createUser", (req, res) =>{
 
 });
 
+router.post("/loginUser", (req, res) =>{
+
+    let user = null;
+    if (req.body.license &&
+        req.body.password) {
+        User.authenticate(req.body.license, req.body.password, function(error, user){
+            if(error || !user){
+                console.log(error);
+                return res.status(401).send({success: false, message: 'Licencia o contraseña incorrecta'});
+            } else {
+                req.session.userId = user._id;
+                return res.json({ success: true });
+            }
+        })
+    }
+});
+
+
 // append /api for our http requests
 app.use("/api", router);
 
@@ -127,13 +151,6 @@ app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
 
-/*
-app.use(session({
-    secret: 'shhh dont tell anyone',
-    resave: true,
-    saveUninitialized: false,
-}));
- */
 
 // launch our backend into a port
 app.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));

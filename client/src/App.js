@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import RegisterForm from './RegisterForm';
 import LandingPage from './LandingPage';
+import LoginForm from './LoginForm';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 class App extends Component {
@@ -53,6 +54,7 @@ class App extends Component {
                     <h2>Bienvenido a Careflix</h2>
                     <Route exact path="/" component={LandingPage} />
                     <Route path="/register" component={RegisterForm} />
+                    <Route path="/login" component={LoginForm} />
                 </div>
             </Router>
         );

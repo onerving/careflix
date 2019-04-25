@@ -18,7 +18,6 @@ var UserSchema = new mongoose.Schema({
     },
     specialty: {
         type: String,
-        unique: true,
         required: true,
         trim: true
     },

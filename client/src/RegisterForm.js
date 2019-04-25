@@ -24,57 +24,59 @@ class RegisterForm extends Component{
 
     render(){
         return(
-            <form onSubmit={this.putUserToDb} style={{ padding: "10px" }}>
-                <label>
-                    Número de Licencia
-                    <input
-                        type="number"
-                        onChange={e => this.setState({ license: e.target.value })}
-                        style={{ width: "200px" }}
-                    />
-                </label>
+            <div>
+                <form onSubmit={this.putUserToDb} style={{ padding: "10px" }}>
+                    <label>
+                        Número de Licencia
+                        <input
+                            type="number"
+                            onChange={e => this.setState({ license: e.target.value })}
+                            style={{ width: "200px" }}
+                        />
+                    </label>
 
-                <label>
-                    Nombre
-                    <input
-                        type="text"
-                        style={{ width: "200px" }}
-                        onChange={e => this.setState({ firstName: e.target.value })}
-                    />
-                </label>
+                    <label>
+                        Nombre
+                        <input
+                            type="text"
+                            style={{ width: "200px" }}
+                            onChange={e => this.setState({ firstName: e.target.value })}
+                        />
+                    </label>
 
-                <label>
-                    Apellidos
-                    <input
-                        type="text"
-                        style={{ width: "200px" }}
-                        onChange={e => this.setState({ lastName: e.target.value })}
-                    />
-                </label>
-                <label>
-                    Especialidad
-                    <select
-                        value={this.state.specialty}
-                        style={{ width: "200px" }}
-                        onChange={e => this.setState({ specialty: e.target.value })}
-                    >
-                        <option value="Gastroenterología">Gastroenterología</option>
-                        <option value="Obstetricia">Obstetricia</option>
-                        <option value="Pediatría">Pediatría</option>
-                    </select>
-                </label>
+                    <label>
+                        Apellidos
+                        <input
+                            type="text"
+                            style={{ width: "200px" }}
+                            onChange={e => this.setState({ lastName: e.target.value })}
+                        />
+                    </label>
+                    <label>
+                        Especialidad
+                        <select
+                            value={this.state.specialty}
+                            style={{ width: "200px" }}
+                            onChange={e => this.setState({ specialty: e.target.value })}
+                        >
+                            <option value="Gastroenterología">Gastroenterología</option>
+                            <option value="Obstetricia">Obstetricia</option>
+                            <option value="Pediatría">Pediatría</option>
+                        </select>
+                    </label>
 
-                <label>
-                    <input
-                        type="password"
-                        style={{ width: "200px" }}
-                        onChange={e => this.setState({ password: e.target.value })}
-                        placeholder="password"
-                    />
-                </label>
+                    <label>
+                        <input
+                            type="password"
+                            style={{ width: "200px" }}
+                            onChange={e => this.setState({ password: e.target.value })}
+                            placeholder="password"
+                        />
+                    </label>
 
-                <input type="submit" value="Submit" />
-            </form>
+                    <input type="submit" value="Submit" />
+                </form>
+            </div>
         )
 
     }

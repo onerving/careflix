@@ -4,17 +4,20 @@ var session = require("express-session");
 var cors = require("cors");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
-const Data = require("./models/data");
 const path = require("path");
 const User = require("./models/user");
+const jwt = require("jsonwebtoken");
+const cookieParser = require('cookie-parser');
+const withAuth = require('./middleware');
 require("dotenv").config();
 
 
+const secret = "yambletPrueba";
 // process.env.PORT deja que Heroku decida el puerto manualmente
 const API_PORT = process.env.PORT || 8000;
 const app = express();
 app.use(cors());
-const router = express.Router();
+app.use(cookieParser());
 
 // this is our MongoDB database
 const dbRoute = "mongodb+srv://onerving:yZS*GGQYT8V5Au@careflix-myqzq.mongodb.net/test?retryWrites=true";
@@ -38,64 +41,19 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(logger("dev"));
 app.use(session({
-    secret: 'shhh dont tell anyone',
+    secret: 'pruebaYamblet',
     resave: true,
     saveUninitialized: false,
 }));
 
-// this is our get method
-// this method fetches all available data in our database
-router.get("/getData", (req, res) => {
-    Data.find((err, data) => {
-        if (err) return res.json({ success: false, error: err });
-        return res.json({ success: true, data: data });
-    });
+
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
 
-// this is our update method
-// this method overwrites existing data in our database
-router.post("/updateData", (req, res) => {
-    const { id, update } = req.body;
-    Data.findByIdAndUpdate(id, update, err => {
-        if (err) return res.json({ success: false, error: err });
-        return res.json({ success: true });
-    });
-});
-
-// this is our delete method
-// this method removes existing data in our database
-router.delete("/deleteData", (req, res) => {
-    const { id } = req.body;
-    console.log(id);
-    Data.findByIdAndDelete(id, err => {
-        if (err) return res.send(err);
-        return res.json({ success: true });
-    });
-});
-
-// this is our create method
-// this method adds new data in our database
-router.post("/putData", (req, res) => {
-    let data = new Data();
-
-    const { id, message } = req.body;
-
-    if ((!id && id !== 0) || !message) {
-        return res.json({
-            success: false,
-            error: "INVALID INPUTS"
-        });
-    }
-    data.message = message;
-    data.id = id;
-    data.save(err => {
-        if (err) return res.json({ success: false, error: err });
-        return res.json({ success: true });
-    });
-});
 
 // Para la creación de un nuevo usuario
-router.post("/createUser", (req, res) =>{
+app.post("/api/createUser", (req, res) =>{
     if (req.body.license &&
         req.body.firstName &&
         req.body.lastName &&
@@ -124,32 +82,33 @@ router.post("/createUser", (req, res) =>{
 
 });
 
-router.post("/loginUser", (req, res) =>{
+app.post("/api/loginUser", (req, res) =>{
+    const {license, password} = req.body;
 
-    let user = null;
-    if (req.body.license &&
-        req.body.password) {
-        User.authenticate(req.body.license, req.body.password, function(error, user){
+    if (license &&
+        password) {
+        User.authenticate(license, password, function(error, user){
             if(error || !user){
-                console.log(error);
-                return res.status(401).send({success: false, message: 'Licencia o contraseña incorrecta'});
+                res.status(401).send({success: false, message: 'Licencia o contraseña incorrecta'});
             } else {
-                req.session.userId = user._id;
-                return res.json({ success: true });
+                const payload = {license};
+
+                const token = jwt.sign(payload, secret, {
+                    expiresIn: '1h'
+                });
+                res.cookie('token', token, {httpOnly: true}).sendStatus(200);
             }
         })
     }
 });
 
-
-// append /api for our http requests
-app.use("/api", router);
+app.get('/api/browse', withAuth, function(req, res) {
+    res.send('The password is potato');
+});
 
 // para usar node.js como router a react
-app.use(express.static(path.join(__dirname, "client", "build")))
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
-});
+app.use(express.static(path.join(__dirname, "client", "build")));
+
 
 
 // launch our backend into a port

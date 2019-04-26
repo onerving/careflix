@@ -12,7 +12,7 @@ class LoginForm extends Component {
         axios.post("/api/loginUser", {
             license: this.state.license,
             password: this.state.password
-        }).then(() => this.props.history.push('/browse'));
+        }).then(() => this.props.history.push('/secret'));
     };
 
 

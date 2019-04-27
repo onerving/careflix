@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import RegisterForm from './RegisterForm';
 import LandingPage from './LandingPage';
 import LoginForm from './LoginForm';
 import Browse from './Browse';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route} from "react-router-dom";
+import {Container, Grid, Header, Menu} from 'semantic-ui-react'
 
 class App extends Component {
 
@@ -16,15 +16,25 @@ class App extends Component {
 
     render() {
         return (
-            <Router>
-                <div className="container">
-                    <h2>Bienvenido a Careflix</h2>
-                    <Route exact path="/" component={LandingPage} />
-                    <Route path="/register" component={RegisterForm} />
-                    <Route path="/login" component={LoginForm} />
-                    <Route path="/secret" component={Browse} />
-                </div>
-            </Router>
+            <Grid container style={{ padding: '2em 0em' }}>
+                <Grid.Row>
+                    <Grid.Column>
+                        <Header as='h1' dividing>
+                            Careflix
+                        </Header>
+                    </Grid.Column>
+                </Grid.Row>
+                <Grid.Row>
+                    <Router>
+                        <Container>
+                            <Route exact path="/" component={LandingPage} />
+                            <Route path="/register" component={RegisterForm} />
+                            <Route path="/login" component={LoginForm} />
+                            <Route path="/secret" component={Browse} />
+                        </Container>
+                    </Router>
+                </Grid.Row>
+            </Grid>
         );
     }
 }

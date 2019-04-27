@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const logger = require("morgan");
 const path = require("path");
 const User = require("./models/user");
+const Specialty = require("./models/specialty");
 const jwt = require("jsonwebtoken");
 const cookieParser = require('cookie-parser');
 const withAuth = require('./middleware');
@@ -50,6 +51,7 @@ app.use(session({
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
+
 
 
 // Para la creación de un nuevo usuario
@@ -102,8 +104,12 @@ app.post("/api/loginUser", (req, res) =>{
     }
 });
 
-app.get('/api/browse', withAuth, function(req, res) {
-    res.send('The password is potato');
+
+app.get('/api/getMaterias', withAuth, function(req, res) {
+    Specialty.find((err, specialties) => {
+        if (err) res.json({ success: false, error: err });
+        res.json({ success: true, specialties: specialties });
+    });
 });
 
 // para usar node.js como router a react

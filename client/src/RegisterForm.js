@@ -9,15 +9,30 @@ class RegisterForm extends Component{
         lastName: null,
         specialty: null,
         password: null,
-        existingUserError: false
+        existingUserError: false,
+        loadingSpecialties: true
     };
     options = [
-        {key:'Pediatría', text: 'Pediatría', value: 'Pediatría'},
-        {key:'Cardiología', text: 'Cardiología', value: 'Cardiología'},
-        {key:'Neurología', text: 'Neurología', value: 'Neurología'},
-        {key:'Gastroenterología', text: 'Gastroenterología', value: 'Gastroenterología'},
     ];
 
+    componentDidMount() {
+        fetch('/api/getSpecialties')
+            .then(specialties => specialties.json())
+            .then(res => {
+                const specialties = res.specialties;
+                specialties.forEach(value => {
+                    const specialty = value.name;
+                    this.options.push({
+                        key: specialty,
+                        text: specialty,
+                        value: specialty,
+                        }
+                    )
+                });
+                this.options.sort((a,b) => (a.key > b.key) ? 1: -1);
+                this.setState({loadingSpecialties: false});
+            });
+    }
 
 
     putUserToDb = event => {
@@ -50,7 +65,7 @@ class RegisterForm extends Component{
                         </Header>
                         <Message attached error hidden={!this.state.existingUserError}
                                  header= 'Usuario en uso'
-                                 content= ' La matricula médica que introduciste ya está en uso.'
+                                 content= 'La matricula médica que introdujiste ya está en uso.'
                         />
                         <Form size='large' onSubmit={this.putUserToDb}>
                             <Segment stacked>
@@ -62,7 +77,7 @@ class RegisterForm extends Component{
                                                 onChange={e => this.setState({ lastName: e.target.value })}
                                     />
                                 </Form.Group>
-                                <Form.Input fluid label='Licencia médica'
+                                <Form.Input fluid label='Matrícula médica'
                                             icon="drivers license"
                                             iconPosition='left'
                                             onChange={e => this.setState({ license: e.target.value })}
@@ -79,7 +94,7 @@ class RegisterForm extends Component{
                                             placeholder='Contraseña'
                                             onChange={e => this.setState({ password: e.target.value })}
                                             type='password'/>
-                                <Form.Button type='submit'
+                                <Form.Button type='submit' primary
                                              disabled = {!this.state.firstName ||
                                              !this.state.lastName || !this.state.lastName ||
                                              !this.state.specialty || !this.state.password}>

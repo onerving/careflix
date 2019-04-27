@@ -4,7 +4,8 @@ import LandingPage from './LandingPage';
 import LoginForm from './LoginForm';
 import Browse from './Browse';
 import { BrowserRouter as Router, Route} from "react-router-dom";
-import {Container, Grid, Header, Menu} from 'semantic-ui-react'
+import {Container, Grid, Header} from 'semantic-ui-react'
+import withAuth from "./withAuth";
 
 class App extends Component {
 
@@ -16,7 +17,9 @@ class App extends Component {
 
     render() {
         return (
-            <Grid container style={{ padding: '2em 0em' }}>
+            <Grid container style={{
+                padding: '2em 0em'
+            }}>
                 <Grid.Row>
                     <Grid.Column>
                         <Header as='h1' dividing>
@@ -30,7 +33,7 @@ class App extends Component {
                             <Route exact path="/" component={LandingPage} />
                             <Route path="/register" component={RegisterForm} />
                             <Route path="/login" component={LoginForm} />
-                            <Route path="/secret" component={Browse} />
+                            <Route path="/browse" component={withAuth(Browse)} />
                         </Container>
                     </Router>
                 </Grid.Row>

@@ -105,11 +105,20 @@ app.post("/api/loginUser", (req, res) =>{
 });
 
 
-app.get('/api/getMaterias', withAuth, function(req, res) {
+app.get('/api/getSpecialties', function(req, res) {
     Specialty.find((err, specialties) => {
         if (err) res.json({ success: false, error: err });
         res.json({ success: true, specialties: specialties });
     });
+});
+
+app.get('/api/checkToken', withAuth, function(req, res) {
+    res.status(200).json({license: req.license});
+});
+
+app.get('/api/getSpecialtyWithLicense', withAuth, function(req,res) {
+    let license = parseInt(req.query.license);
+    User.findOne({license: license}, 'specialty', (err, user) => res.json({specialty: user.specialty}));
 });
 
 // para usar node.js como router a react

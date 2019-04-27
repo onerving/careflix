@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import {Form, Grid, Header, Message, Segment} from "semantic-ui-react";
 
 class LoginForm extends Component {
     state = {
@@ -12,33 +13,39 @@ class LoginForm extends Component {
         axios.post("/api/loginUser", {
             license: this.state.license,
             password: this.state.password
-        }).then(() => this.props.history.push('/secret'));
+        }).then(() => this.props.history.push('/browse'));
     };
 
 
     render() {
         return (
             <div>
-                <form onSubmit={this.loginUser}>
-                    <label>
-                        Número de Licencia
-                        <input
-                            type="string"
-                            onChange={e => this.setState({ license: e.target.value } ) }
+                <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
+                    <Grid.Column style={{ maxWidth: 450 }}>
+                        <Header as='h2' textAlign='center'>
+                            Inicia sesión
+                        </Header>
+                        <Message attached error hidden={!this.state.existingUserError}
+                                 header= 'Usuario en uso'
+                                 content= ' La matricula médica que introduciste ya está en uso.'
                         />
-                    </label>
-
-                    <label>
-                        <input
-                            type="password"
-                            style={{ width: "200px" }}
-                            onChange={e => this.setState({ password: e.target.value })}
-                            placeholder="password"
-                        />
-                    </label>
-                    <input type="submit" value="Submit" />
-                </form>
-
+                        <Form size='large' onSubmit={this.loginUser}>
+                            <Segment stacked>
+                                <Form.Input fluid label='Matrícula médica'
+                                            icon='drivers license'
+                                            onChange={e => this.setState({ license: e.target.value } ) }
+                                />
+                                <Form.Input fluid label='Contraseña'
+                                            type='password'
+                                            onChange={e => this.setState({ password: e.target.value })}
+                                />
+                                <Form.Button fluid primary
+                                             disabled = {!this.state.license || !this.state.password}
+                                >Iniciar Sesión</Form.Button>
+                            </Segment>
+                        </Form>
+                    </Grid.Column>
+                </Grid>
             </div>
         );
     }

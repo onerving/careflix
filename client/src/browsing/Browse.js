@@ -3,6 +3,7 @@ import "video-react/dist/video-react.css"
 import CategoryBar from "./CategoryBar";
 import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
 import {Container, Header} from "semantic-ui-react";
+import VideoThumbnail from "react-video-thumbnail";
 const axios = require('axios');
 
 class Browse extends Component {
@@ -63,6 +64,12 @@ class Browse extends Component {
                         {categoryVideos.map(video => (
                             <Container>
                                 <Header>{video.title}</Header>
+                                <VideoThumbnail
+                                    videoUrl={"../video/" + video.filename}
+                                    snapshotAtTime={20}
+                                    width={240}
+                                    height={160}
+                                />
                             </Container>
                         ))}
                     </Grid.Column>

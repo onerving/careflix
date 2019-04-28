@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import axios from 'axios'
 import {Player} from 'video-react';
 import "../../node_modules/video-react/dist/video-react.css";
+import {Grid, Header, Segment} from "semantic-ui-react";
 
 class VideoBrowser extends Component {
     state = {
@@ -24,8 +25,21 @@ class VideoBrowser extends Component {
         }
         const {filename, title} = this.state.video;
         return (
-            <Player playsinline
-                    src={'../video/' + filename} />
+            <Grid centered>
+                <Grid.Column columns width={12}>
+                    <Segment.Group>
+                        <Segment>
+                            <Player playsinline
+                                    src={'../video/' + filename} />
+                        </Segment>
+                        <Segment inverted color={'blue'}>
+                            <Header inverted as={'h1'}>
+                                {title}
+                            </Header>
+                        </Segment>
+                    </Segment.Group>
+                </Grid.Column>
+            </Grid>
         );
     }
 }

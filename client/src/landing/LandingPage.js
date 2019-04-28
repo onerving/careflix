@@ -1,30 +1,35 @@
 import React, { Component } from "react";
-import {Button, Grid, Header} from "semantic-ui-react";
+import {Button, Grid, Header, Image, Segment} from "semantic-ui-react";
 import { Link } from 'react-router-dom'
+import landing from './img/landing.jpeg'
 
 class LandingPage extends Component{
     render(){
         return(
-            <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
-                <Grid.Row>
-                    <Header as='h1'
-                            content='Careflix'
-                    />
-                </Grid.Row>
-                <Grid.Row>
-                    <Header as='h2'
-                            content='Los mejores videos de temas médicos, accesibles en segundos.'
-                    />
-                </Grid.Row>
-                <Grid.Row>
-                    <Link to='/register'>
-                        <Button primary> Regístrate </Button>
-                    </Link>
-                    <Link to='/login'>
-                    <Button basic> Inicia sesión </Button>
-                    </Link>
-                </Grid.Row>
-            </Grid>
+            <Segment>
+                <Grid textAlign='left' verticalAlign='middle'>
+                    <Grid.Column width={6}>
+                        <Image src={landing} flow rounded />
+                    </Grid.Column>
+                    <Grid.Column width={6}>
+                        <Grid.Row style={{'padding-bottom': '5em'}}>
+                            <Header as='h1' style={{'font-size': '5em'}}>
+                                Careflix
+                                <Header.Subheader>Los mejores videos de temas médicos, accesibles en segundos.</Header.Subheader>
+                            </Header>
+                        </Grid.Row>
+                        <Grid.Row>
+                            <Link to='/register'>
+                                <Button primary> Regístrate </Button>
+                            </Link>
+                            <Link to='/login'>
+                                <Button basic> Inicia sesión </Button>
+                            </Link>
+                        </Grid.Row>
+
+                    </Grid.Column>
+                </Grid>
+            </Segment>
         )
 
 

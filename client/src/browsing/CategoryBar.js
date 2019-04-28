@@ -9,7 +9,7 @@ class CategoryBar extends Component {
 
         return (
             <Grid.Column width={4}>
-                <Menu color={'blue'}
+                <Menu inverted color={'blue'}
                       pointing
                       vertical>
                     {specialties.map(specialty => (

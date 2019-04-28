@@ -3,8 +3,8 @@ import RegisterForm from './landing/RegisterForm';
 import LandingPage from './landing/LandingPage';
 import LoginForm from './landing/LoginForm';
 import Browse from './browsing/Browse';
-import { BrowserRouter as Router, Route} from "react-router-dom";
-import {Container, Grid, Header} from 'semantic-ui-react'
+import {BrowserRouter as Router, Link, Route} from "react-router-dom";
+import {Container, Grid, Header, Segment} from 'semantic-ui-react'
 import withAuth from "./withAuth";
 import VideoBrowser from "./watching/VideoBrowser";
 
@@ -19,13 +19,15 @@ class App extends Component {
     render() {
         return (
             <Grid container style={{
-                padding: '2em 0em'
+                padding: '2em 0em',
             }}>
                 <Grid.Row>
                     <Grid.Column>
-                        <Header as='h1' dividing>
-                            Careflix
-                        </Header>
+                        <Segment  color={'blue'}>
+                            <Header as='h1' >
+                                Careflix
+                            </Header>
+                        </Segment>
                     </Grid.Column>
                 </Grid.Row>
                 <Grid.Row>

@@ -9,7 +9,9 @@ class CategoryBar extends Component {
 
         return (
             <Grid.Column width={4}>
-                <Menu pointing vertical>
+                <Menu color={'blue'}
+                      pointing
+                      vertical>
                     {specialties.map(specialty => (
                         <Menu.Item name={specialty}
                                    active={activeItem === specialty}

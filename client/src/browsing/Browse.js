@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import "video-react/dist/video-react.css"
 import CategoryBar from "./CategoryBar";
 import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
-import {Container, Header} from "semantic-ui-react";
+import {Dimmer, Card, Image} from "semantic-ui-react";
 import VideoThumbnail from "react-video-thumbnail";
 const axios = require('axios');
 
@@ -61,17 +61,23 @@ class Browse extends Component {
                                  selectSpecialty = {this.selectSpecialty}
                                  specialties = {this.state.specialties} />
                     <Grid.Column width={12}>
-                        {categoryVideos.map(video => (
-                            <Container>
-                                <Header>{video.title}</Header>
-                                <VideoThumbnail
-                                    videoUrl={"../video/" + video.filename}
-                                    snapshotAtTime={20}
-                                    width={240}
-                                    height={160}
-                                />
-                            </Container>
-                        ))}
+                        <Card.Group itemsPerRow={3}>
+                            {categoryVideos.map(video => (
+                                <Card href={'/login'}
+                                      color={'blue'}
+                                >
+                                    <Image>
+                                        <VideoThumbnail videoUrl={"../video/" + video.filename}
+                                                        snapshotAtTime={20}
+                                        />
+                                    </Image>
+                                    <Card.Content>
+                                        <Card.Header>{video.title}</Card.Header>
+                                        <Card.Meta>{video.category}</Card.Meta>
+                                    </Card.Content>
+                                </Card>
+                            ))}
+                        </Card.Group>
                     </Grid.Column>
                 </Grid>
             </React.Fragment>

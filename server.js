@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const logger = require("morgan");
 const path = require("path");
 const User = require("./models/user");
+const Video = require("./models/video");
 const Specialty = require("./models/specialty");
 const jwt = require("jsonwebtoken");
 const cookieParser = require('cookie-parser');
@@ -119,6 +120,14 @@ app.get('/api/checkToken', withAuth, function(req, res) {
 app.get('/api/getSpecialtyWithLicense', withAuth, function(req,res) {
     let license = parseInt(req.query.license);
     User.findOne({license: license}, 'specialty', (err, user) => res.json({specialty: user.specialty}));
+});
+
+app.get("/api/get/videos", withAuth, (req, res) => {
+    const category = req.query.category;
+    Video.find({category: category}, (err, data) => {
+        if (err) res.json({ success: false, error: err });
+        res.json({ success: true, videos: data });
+    });
 });
 
 // para usar node.js como router a react

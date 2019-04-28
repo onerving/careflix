@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import RegisterForm from './RegisterForm';
-import LandingPage from './LandingPage';
-import LoginForm from './LoginForm';
-import Browse from './Browse';
+import RegisterForm from './landing/RegisterForm';
+import LandingPage from './landing/LandingPage';
+import LoginForm from './landing/LoginForm';
+import Browse from './browsing/Browse';
 import { BrowserRouter as Router, Route} from "react-router-dom";
 import {Container, Grid, Header} from 'semantic-ui-react'
 import withAuth from "./withAuth";
@@ -33,7 +33,9 @@ class App extends Component {
                             <Route exact path="/" component={LandingPage} />
                             <Route path="/register" component={RegisterForm} />
                             <Route path="/login" component={LoginForm} />
-                            <Route path="/browse" component={withAuth(Browse)} />
+                            <Grid.Row>
+                                <Route path="/browse" component={withAuth(Browse)} />
+                            </Grid.Row>
                         </Container>
                     </Router>
                 </Grid.Row>

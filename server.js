@@ -130,6 +130,14 @@ app.get("/api/get/videos", withAuth, (req, res) => {
     });
 });
 
+app.get("/api/get/video", withAuth, (req, res) => {
+    const videoId = req.query.videoId;
+    Video.findById(videoId, (err, data) => {
+        if (err) res.json({ success: false, error: err });
+        res.json({ success: true, video: data });
+    });
+});
+
 // para usar node.js como router a react
 app.use(express.static(path.join(__dirname, "client", "build")));
 

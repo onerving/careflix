@@ -36,7 +36,7 @@ export default function withAuth(ComponentToProtect) {
             }
             return (
                 <React.Fragment>
-                    <ComponentToProtect license={this.state.license}/>
+                    <ComponentToProtect {...this.props} license={this.state.license}/>
                 </React.Fragment>
             );
         }

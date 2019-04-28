@@ -6,6 +6,7 @@ import Browse from './browsing/Browse';
 import { BrowserRouter as Router, Route} from "react-router-dom";
 import {Container, Grid, Header} from 'semantic-ui-react'
 import withAuth from "./withAuth";
+import VideoBrowser from "./watching/VideoBrowser";
 
 class App extends Component {
 
@@ -33,6 +34,7 @@ class App extends Component {
                             <Route exact path="/" component={LandingPage} />
                             <Route path="/register" component={RegisterForm} />
                             <Route path="/login" component={LoginForm} />
+                            <Route path="/watch/:videoId" component={withAuth(VideoBrowser)} />
                             <Grid.Row>
                                 <Route path="/browse" component={withAuth(Browse)} />
                             </Grid.Row>

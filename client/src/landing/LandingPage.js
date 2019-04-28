@@ -13,7 +13,7 @@ class LandingPage extends Component{
                 </Grid.Row>
                 <Grid.Row>
                     <Header as='h2'
-                            content='Los mejor videos de temas médicos, accesibles en segundos.'
+                            content='Los mejores videos de temas médicos, accesibles en segundos.'
                     />
                 </Grid.Row>
                 <Grid.Row>

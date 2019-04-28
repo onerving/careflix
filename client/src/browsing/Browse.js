@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import "video-react/dist/video-react.css"
 import CategoryBar from "./CategoryBar";
 import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
-import {Dimmer, Card, Image} from "semantic-ui-react";
+import {Card, Image} from "semantic-ui-react";
 import VideoThumbnail from "react-video-thumbnail";
 const axios = require('axios');
 
@@ -63,7 +63,7 @@ class Browse extends Component {
                     <Grid.Column width={12}>
                         <Card.Group itemsPerRow={3}>
                             {categoryVideos.map(video => (
-                                <Card href={'/login'}
+                                <Card href={'/watch/' + video._id}
                                       color={'blue'}
                                 >
                                     <Image>

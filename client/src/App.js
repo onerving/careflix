@@ -37,9 +37,7 @@ class App extends Component {
                             <Route path="/register" component={RegisterForm} />
                             <Route path="/login" component={LoginForm} />
                             <Route path="/watch/:videoId" component={withAuth(VideoBrowser)} />
-                            <Grid.Row>
-                                <Route path="/browse" component={withAuth(Browse)} />
-                            </Grid.Row>
+                            <Route path="/browse" component={withAuth(Browse)} />
                         </Container>
                     </Router>
                 </Grid.Row>

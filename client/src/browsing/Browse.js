@@ -67,7 +67,7 @@ class Browse extends Component {
                                       color={'blue'}
                                 >
                                     <Image>
-                                        <VideoThumbnail videoUrl={"../video/" + video.filename}
+                                        <VideoThumbnail videoUrl={video.filename}
                                                         snapshotAtTime={20}
                                         />
                                     </Image>

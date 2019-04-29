@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import axios from 'axios'
-import {Player} from 'video-react';
 import "../../node_modules/video-react/dist/video-react.css";
 import {Grid, Header, Segment} from "semantic-ui-react";
+import Iframe from 'react-iframe'
 
 class VideoBrowser extends Component {
     state = {
@@ -29,8 +29,13 @@ class VideoBrowser extends Component {
                 <Grid.Column columns width={12}>
                     <Segment.Group>
                         <Segment>
-                            <Player playsinline
-                                    src={filename} />
+                            <Iframe url={"http://www.youtube.com/embed/" + filename}
+                                    width="800px"
+                                    height="600px"
+                                    id="myId"
+                                    className="myClassname"
+                                    display="initial"
+                                    position="relative"/>
                         </Segment>
                         <Segment inverted color={'blue'}>
                             <Header inverted as={'h1'}>

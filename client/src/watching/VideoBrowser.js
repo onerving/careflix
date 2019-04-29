@@ -30,7 +30,7 @@ class VideoBrowser extends Component {
                     <Segment.Group>
                         <Segment>
                             <Player playsinline
-                                    src={'../video/' + filename} />
+                                    src={filename} />
                         </Segment>
                         <Segment inverted color={'blue'}>
                             <Header inverted as={'h1'}>

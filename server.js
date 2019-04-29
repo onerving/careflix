@@ -130,7 +130,7 @@ app.get("/api/get/videos", withAuth, (req, res) => {
     });
 });
 
-app.get("/api/get/video", withAuth, (req, res) => {
+app.get("/api/getVideo", withAuth, (req, res) => {
     const videoId = req.query.videoId;
     Video.findById(videoId, (err, data) => {
         if (err) res.json({ success: false, error: err });

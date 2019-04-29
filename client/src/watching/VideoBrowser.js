@@ -11,7 +11,7 @@ class VideoBrowser extends Component {
     componentDidMount(): void {
         const{ match: {params}} = this.props;
 
-        axios.get('/api/get/video', {
+        axios.get('/api/getVideo', {
             params: {
                 videoId: params.videoId
             }

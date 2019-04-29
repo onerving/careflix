@@ -29,7 +29,7 @@ class VideoBrowser extends Component {
                 <Grid.Column columns width={12}>
                     <Segment.Group>
                         <Segment>
-                            <Iframe url={"http://www.youtube.com/embed/" + filename}
+                            <Iframe url={"https://www.youtube.com/embed/" + filename}
                                     width="800px"
                                     height="600px"
                                     id="myId"

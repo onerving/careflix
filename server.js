@@ -140,6 +140,9 @@ app.get("/api/getVideo", withAuth, (req, res) => {
 
 // para usar node.js como router a react
 app.use(express.static(path.join(__dirname, "client", "build")));
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+});
 
 
 

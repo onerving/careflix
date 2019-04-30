@@ -24,6 +24,7 @@
     "mongoose": "^5.5.2",
     "morgan": "^1.9.1",
     "react": "^16.8.6",
+    "react-iframe": "^1.8.0",
     "react-router-dom": "^5.0.0"
   },
   "engines": {

@@ -4,6 +4,7 @@ import CategoryBar from "./CategoryBar";
 import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
 import {Card, Image} from "semantic-ui-react";
 import VideoThumbnail from "react-video-thumbnail";
+import NavigationBar from "../NavigationBar";
 const axios = require('axios');
 
 class Browse extends Component {
@@ -56,12 +57,14 @@ class Browse extends Component {
         const categoryVideos = this.state.categoryVideos;
         return (
             <React.Fragment>
-                <Grid columns={2}>
-                    <CategoryBar activeItem = {this.state.activeItem}
-                                 selectSpecialty = {this.selectSpecialty}
-                                 specialties = {this.state.specialties} />
-                    <Grid.Column width={12}>
-                        <Card.Group itemsPerRow={3}>
+                <Grid>
+                    <Grid.Column width={3}>
+                        <CategoryBar activeItem = {this.state.activeItem}
+                                     selectSpecialty = {this.selectSpecialty}
+                                     specialties = {this.state.specialties} />
+                    </Grid.Column>
+                    <Grid.Column width={13}>
+                        <Card.Group itemsPerRow={4}>
                             {categoryVideos.map(video => (
                                 <Card href={'/watch/' + video._id}
                                       color={'blue'}

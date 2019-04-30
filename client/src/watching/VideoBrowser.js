@@ -3,6 +3,7 @@ import axios from 'axios'
 import "../../node_modules/video-react/dist/video-react.css";
 import {Grid, Header, Segment} from "semantic-ui-react";
 import Iframe from 'react-iframe'
+import ResponsiveEmbed from 'react-responsive-embed'
 
 class VideoBrowser extends Component {
     state = {
@@ -29,13 +30,10 @@ class VideoBrowser extends Component {
                 <Grid.Column columns width={12}>
                     <Segment.Group>
                         <Segment>
-                            <Iframe url={"https://www.youtube.com/embed/" + filename}
-                                    width="800px"
-                                    height="600px"
-                                    id="myId"
-                                    className="myClassname"
-                                    display="initial"
-                                    position="relative"/>
+                            <ResponsiveEmbed
+                                src={"https://www.youtube.com/embed/" + filename}
+                                allowFullScreen
+                            />
                         </Segment>
                         <Segment inverted color={'blue'}>
                             <Header inverted as={'h1'}>

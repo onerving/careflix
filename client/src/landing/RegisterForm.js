@@ -4,6 +4,11 @@ import {Form, Grid, Header, Message, Segment} from 'semantic-ui-react'
 
 class RegisterForm extends Component{
     state = {
+        error: {
+            header: '',
+            content: '',
+            source: null
+        },
         license: null,
         firstName: null,
         lastName: null,
@@ -14,6 +19,21 @@ class RegisterForm extends Component{
     };
     options = [
     ];
+
+    setError(header, content, source){
+        this.setState({error:{
+                header: header,
+                content: content,
+                source: source
+            }});
+    }
+    removeError(source){
+        if(this.state.error.source === source){
+            this.setState({error:{
+                    source:null
+                }});
+        }
+    }
 
     componentDidMount() {
         fetch('/api/getSpecialties')
@@ -34,6 +54,16 @@ class RegisterForm extends Component{
             });
     }
 
+    onLicenseChange(e) {
+        const license = e.target.value;
+        if(/\D/.test(license)){
+            this.setError("Matrícula invalida", "Una matrícula médica solo puede contener números", 'license');
+        }else{
+            this.removeError('license');
+            this.setState({license: e.target.value});
+        }
+    }
+
 
     putUserToDb = event => {
         event.preventDefault();
@@ -49,7 +79,7 @@ class RegisterForm extends Component{
         ).then( () => this.props.history.push('/'))
             .catch(({response}) => {
                 error = response;
-                this.setState({existingUserError: true});
+                this.setError('Matrícula en uso', 'La matrícula que introdujiste ya está en uso.', 'user');
             });
         if(error == null) {
         }
@@ -63,9 +93,9 @@ class RegisterForm extends Component{
                         <Header as='h2' textAlign='center'>
                             Crea tu cuenta
                         </Header>
-                        <Message attached error hidden={!this.state.existingUserError}
-                                 header= 'Usuario en uso'
-                                 content= 'La matricula médica que introdujiste ya está en uso.'
+                        <Message attached error hidden={this.state.error.source == null}
+                                 header = {this.state.error.header}
+                                 content= {this.state.error.content}
                         />
                         <Form size='large' onSubmit={this.putUserToDb}>
                             <Segment stacked>
@@ -80,8 +110,8 @@ class RegisterForm extends Component{
                                 <Form.Input fluid label='Matrícula médica'
                                             icon="drivers license"
                                             iconPosition='left'
-                                            onChange={e => this.setState({ license: e.target.value })}
-                                            error = {this.state.existingUserError}
+                                            onChange={this.onLicenseChange.bind(this)}
+                                            error = {this.state.error.source === 'license'}
                                             placeholder='12345678'/>
                                 <Form.Select label='Especialidad'
                                              options={this.options}
@@ -107,7 +137,8 @@ class RegisterForm extends Component{
                 <Form>
                 </Form>
             </div>
-        )
+        );
+
 
     }
 }

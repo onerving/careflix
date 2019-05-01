@@ -3,8 +3,6 @@ import "video-react/dist/video-react.css"
 import CategoryBar from "./CategoryBar";
 import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
 import {Card, Image} from "semantic-ui-react";
-import VideoThumbnail from "react-video-thumbnail";
-import NavigationBar from "../NavigationBar";
 const axios = require('axios');
 
 class Browse extends Component {

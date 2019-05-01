@@ -8,6 +8,7 @@ import {Container} from 'semantic-ui-react'
 import withAuth from "./withAuth";
 import VideoBrowser from "./watching/VideoBrowser";
 import styled from "styled-components";
+import UploadVideo from "./admin/UploadVideo";
 
 class App extends Component {
     render() {
@@ -26,6 +27,7 @@ class App extends Component {
                     <Route path="/login" component={LoginForm} />
                     <Route path="/watch/:videoId" component={withAuth(VideoBrowser)} />
                     <Route path="/browse" component={withAuth(Browse)} />
+                    <Route path="/upload" component={withAuth(UploadVideo)} />
                 </Router>
             </MainContainer>
         );

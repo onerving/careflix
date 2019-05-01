@@ -84,6 +84,30 @@ app.post("/api/createUser", (req, res) =>{
     }
 
 });
+app.post("/api/createVideo", (req, res) =>{
+    if (req.body.id &&
+        req.body.category &&
+        req.body.title) {
+        const videoData = {
+            filename: req.body.id,
+            title: req.body.title,
+            category: req.body.category,
+        };
+        //use schema.create to insert data into the db
+        Video.create(videoData, function (err, video) {
+            if (err) {
+                console.log(err);
+                // Verificamos que el usuario no esté ya en la base de datos.
+                if (err.name === 'MongoError' && err.code === 11000){
+                    return res.status(500).send({success: false, message: 'El usuario ya existe!'});
+                }
+                return res.status(500).send(err);
+            }
+            return res.json({ success: true });
+        });
+    }
+
+});
 
 app.post("/api/loginUser", (req, res) =>{
     const {license, password} = req.body;

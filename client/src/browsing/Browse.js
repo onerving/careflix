@@ -69,10 +69,9 @@ class Browse extends Component {
                                 <Card href={'/watch/' + video._id}
                                       color={'blue'}
                                 >
-                                    <Image>
-                                        <VideoThumbnail videoUrl={'../video/' + video.filename + '.mp4'}
-                                                        snapshotAtTime={20}
-                                        />
+                                    <Image
+                                        src={'https://img.youtube.com/vi/' + video.filename + '/0.jpg'}
+                                    >
                                     </Image>
                                     <Card.Content>
                                         <Card.Header>{video.title}</Card.Header>

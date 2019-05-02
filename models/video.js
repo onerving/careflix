@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var random = require('mongoose-simple-random');
 var VideoSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -20,6 +21,7 @@ var VideoSchema = new mongoose.Schema({
     }
 });
 
+VideoSchema.plugin(random);
 VideoSchema.index({category: 1});
 var Video = mongoose.model('Video', VideoSchema);
 module.exports = Video;

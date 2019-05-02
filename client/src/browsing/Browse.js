@@ -60,7 +60,8 @@ class Browse extends Component {
                     <Grid.Column width={3}>
                         <CategoryBar activeItem = {this.state.activeItem}
                                      selectSpecialty = {this.selectSpecialty}
-                                     specialties = {this.state.specialties} />
+                                     specialties = {this.state.specialties}
+                        />
                     </Grid.Column>
                     <Grid.Column width={13}>
                         <Card.Group itemsPerRow={4}>

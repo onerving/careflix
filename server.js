@@ -154,6 +154,15 @@ app.get("/api/get/videos", withAuth, (req, res) => {
     });
 });
 
+app.get("/api/get/randomVideos", withAuth, (req, res) => {
+    const amount = req.query.amount;
+
+    Video.findRandom({},{},{limit:amount}, (err, data)=>{
+        if (err) res.json({ success: false, error: err });
+        res.json({ success: true, videos: data });
+    });
+});
+
 app.get("/api/getVideo", withAuth, (req, res) => {
     const videoId = req.query.videoId;
     Video.findById(videoId, (err, data) => {

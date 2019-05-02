@@ -30,7 +30,7 @@ class LoginForm extends Component {
                                  content= ' La matricula médica que introduciste ya está en uso.'
                         />
                         <Form size='large' onSubmit={this.loginUser}>
-                            <Segment stacked>
+                            <Segment stacked color={'blue'}>
                                 <Form.Input fluid label='Matrícula médica'
                                             icon='drivers license'
                                             onChange={e => this.setState({ license: e.target.value } ) }

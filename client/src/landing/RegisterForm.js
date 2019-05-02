@@ -98,7 +98,7 @@ class RegisterForm extends Component{
                                  content= {this.state.error.content}
                         />
                         <Form size='large' onSubmit={this.putUserToDb}>
-                            <Segment stacked>
+                            <Segment stacked color={'blue'}>
                                 <Form.Group widths='equal'>
                                     <Form.Input fluid label="Nombre(s)"
                                                 onChange={e => this.setState({ firstName: e.target.value })}

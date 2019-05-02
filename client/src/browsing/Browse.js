@@ -3,6 +3,7 @@ import "video-react/dist/video-react.css"
 import CategoryBar from "./CategoryBar";
 import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
 import {Card, Image} from "semantic-ui-react";
+import VideoCard from "./VideoCard";
 const axios = require('axios');
 
 class Browse extends Component {
@@ -63,20 +64,7 @@ class Browse extends Component {
                     </Grid.Column>
                     <Grid.Column width={13}>
                         <Card.Group itemsPerRow={4}>
-                            {categoryVideos.map(video => (
-                                <Card href={'/watch/' + video._id}
-                                      color={'blue'}
-                                >
-                                    <Image
-                                        src={'https://img.youtube.com/vi/' + video.filename + '/0.jpg'}
-                                    >
-                                    </Image>
-                                    <Card.Content>
-                                        <Card.Header>{video.title}</Card.Header>
-                                        <Card.Meta>{video.category}</Card.Meta>
-                                    </Card.Content>
-                                </Card>
-                            ))}
+                            {categoryVideos.map(video => ( <VideoCard video={video}/> ))}
                         </Card.Group>
                     </Grid.Column>
                 </Grid>

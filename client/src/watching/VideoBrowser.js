@@ -22,7 +22,7 @@ class VideoBrowser extends Component {
 
         axios.get('/api/get/randomVideos', {
             params: {
-                amount: 4
+                amount: 3
             }
         })
             .then(res => this.setState({suggestions: res.data.videos}));
@@ -73,7 +73,7 @@ class RecommendationBar extends Component{
                         </Header>
                     </Segment>
                     <Segment>
-                        <Card.Group itemsPerRow={4}>
+                        <Card.Group itemsPerRow={3}>
                             { suggestions.map( video => (<VideoCard video={video}/> )) }
                         </Card.Group>
                     </Segment>

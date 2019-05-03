@@ -195,6 +195,24 @@ app.get("/api/getVideo", withAuth, (req, res) => {
     });
 });
 
+app.get("/api/getHistory", withAuth, (req, res) => {
+    const license = req.query.license;
+    History.find({license:license}, (err, history) => {
+        if (err) res.json({ success: false, error: err });
+        const ids = history[0].watchedVideos;
+        Video.find()
+            .where('_id')
+            .in(ids)
+            .exec((err, videos)=>{
+                let videoObjs = {};
+                videos.forEach(video =>{ videoObjs[video._id] = video });
+                let responseVideos = ids.map(id => videoObjs[id]);
+                res.json({ success: true, videos: responseVideos });
+            });
+
+    });
+});
+
 // para usar node.js como router a react
 app.use(express.static(path.join(__dirname, "client", "build")));
 app.get("*", (req, res) => {

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Container, Grid, Menu} from 'semantic-ui-react'
+import {Link} from "react-router-dom";
 
 class CategoryBar extends Component {
     render() {
@@ -18,6 +19,10 @@ class CategoryBar extends Component {
                                        active={activeItem === specialty}
                                        onClick={selectSpecialty}/>
                         ))}
+                        <Link to={'/history'}>
+                            <Menu.Item name={'Historial'}/>
+                        </Link>
+
                     </Menu>
                 </Grid.Column>
             </Container>

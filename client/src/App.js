@@ -3,6 +3,7 @@ import RegisterForm from './landing/RegisterForm';
 import LandingPage from './landing/LandingPage';
 import LoginForm from './landing/LoginForm';
 import Browse from './browsing/Browse';
+import History from './History';
 import {BrowserRouter as Router, Route} from "react-router-dom";
 import {Container} from 'semantic-ui-react'
 import withAuth from "./withAuth";
@@ -28,6 +29,7 @@ class App extends Component {
                     <Route path="/watch/:videoId" component={withAuth(VideoBrowser)} />
                     <Route path="/browse" component={withAuth(Browse)} />
                     <Route path="/upload" component={withAuth(UploadVideo)} />
+                    <Route path="/history" component={withAuth(History)} />
                 </Router>
             </MainContainer>
         );

@@ -8,6 +8,7 @@ const path = require("path");
 const User = require("./models/user");
 const Video = require("./models/video");
 const Specialty = require("./models/specialty");
+const History = require("./models/history");
 const jwt = require("jsonwebtoken");
 const cookieParser = require('cookie-parser');
 const withAuth = require('./middleware');
@@ -77,6 +78,7 @@ app.post("/api/createUser", (req, res) =>{
                 if (err.name === 'MongoError' && err.code === 11000){
                     return res.status(500).send({success: false, message: 'El usuario ya existe!'});
                 }
+                History.create({license: req.body.license, watchedVideos: []});
                 return res.status(500).send(err);
             }
             return res.json({ success: true });
@@ -142,9 +144,31 @@ app.get('/api/checkToken', withAuth, function(req, res) {
 });
 
 app.get('/api/getSpecialtyWithLicense', withAuth, function(req,res) {
-    let license = parseInt(req.query.license);
+    const license = parseInt(req.query.license);
     User.findOne({license: license}, 'specialty', (err, user) => res.json({specialty: user.specialty}));
 });
+
+app.post('/api/addToHistory', function(req,res) {
+    const {license, id} = req.body;
+
+    if(license && id){
+        History.findOne({license: license}, (err, history) => {
+            if(history != null){
+                history.watchedVideos.unshift(id);
+                history.save();
+                res.json({history})
+            }else{
+                History.create({license: license, watchedVideos: []}, (err, history) => {
+                    history.watchedVideos.unshift(id);
+                    history.save();
+                    res.json({history})
+                });
+            }
+        });
+
+    }
+});
+
 
 app.get("/api/get/videos", withAuth, (req, res) => {
     const category = req.query.category;

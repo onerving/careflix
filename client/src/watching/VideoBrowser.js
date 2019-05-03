@@ -10,15 +10,19 @@ class VideoBrowser extends Component {
         video: null,
         suggestions: null
     };
+
     componentDidMount(): void {
-        const{ match: {params}} = this.props;
+        console.log(this.props);
+        const{ match: {params}, license} = this.props;
 
         axios.get('/api/getVideo', {
             params: {
                 videoId: params.videoId
             }
         })
-            .then(res => this.setState({video: res.data.video}));
+            .then(res => {
+                this.setState({video: res.data.video})
+            });
 
         axios.get('/api/get/randomVideos', {
             params: {
@@ -26,8 +30,14 @@ class VideoBrowser extends Component {
             }
         })
             .then(res => this.setState({suggestions: res.data.videos}));
-    }
 
+        axios.post('/api/addToHistory', {
+            id: params.videoId,
+            license: license,
+        })
+
+
+    }
 
     /*
      */

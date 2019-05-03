@@ -15,8 +15,10 @@ export default function withAuth(ComponentToProtect) {
             fetch('/api/checkToken')
                 .then(res => {
                     if (res.status === 200) {
-                        this.setState({ loading: false});
-                        res.json().then(res => this.setState({license: res.license}));
+                        res.json().then(res => {
+                                this.setState({license: res.license});
+                                this.setState({ loading: false});
+                        } );
                     } else {
                         throw new Error(res.error);
                     }

@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import "video-react/dist/video-react.css"
 import CategoryBar from "./CategoryBar";
 import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
-import {Card, Image} from "semantic-ui-react";
+import {Card} from "semantic-ui-react";
 import VideoCard from "./VideoCard";
-const axios = require('axios');
+import axios from 'axios';
 
 class Browse extends Component {
     state = {
